@@ -1,7 +1,7 @@
 import { test as base, createBdd } from 'playwright-bdd';
 import * as Pages from './pageCollection.js';
 
-const { TextBoxPage, CheckBoxPage, RadioButtonPage, AlertPage } = Pages;
+const { TextBoxPage, CheckBoxPage, RadioButtonPage, AlertPage, ButtonPage, ModalDialogBoxPage } = Pages;
 
 const createTestFunction = (PageClass) => async ({ page }, use) => {
     await use(new PageClass(page));
@@ -12,6 +12,8 @@ export const test = base.extend({
     checkBoxPage: createTestFunction(CheckBoxPage),
     radioButtonPage: createTestFunction(RadioButtonPage),
     alertPage: createTestFunction(AlertPage),
+    buttonPage: createTestFunction(ButtonPage),
+    modalDialogBoxPage: createTestFunction(ModalDialogBoxPage),
 
     variableStorage: async ({ }, use) => {
         const variableStorage = {};
