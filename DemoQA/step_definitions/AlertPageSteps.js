@@ -1,7 +1,5 @@
 import { Given, When, Then } from '../fixtures/page.js';
 import { expect } from "@playwright/test";
-var dialogMessage = null;
-
 
 Given("I navigate to Alert Page", async ({ page, alertPage }) => {
     await alertPage.visitAlertPage();
