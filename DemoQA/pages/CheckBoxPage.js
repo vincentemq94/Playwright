@@ -16,7 +16,7 @@ class CheckBoxPage {
     }
 
     async visitCheckboxPage() {
-        return await this.page.goto(this.url);
+        this.page.goto(this.url, { waitUntil: 'domcontentloaded' });
     }
 
     async clickOnCheckbox(checkboxName) {

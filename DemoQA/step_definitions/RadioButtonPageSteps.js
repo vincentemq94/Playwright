@@ -1,7 +1,5 @@
 import { expect } from '@playwright/test';
-const { Given, When, Then } = require('../fixtures/page.js');
-
-
+import { Given, When, Then } from '../fixtures/page.js';
 
 Given("I navigate to Radio Button Page", async ({ radioButtonPage }) => {
     await radioButtonPage.visitRadioButtonPage();

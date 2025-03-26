@@ -11,7 +11,7 @@ class RadioButtonPage {
     }
 
     async visitRadioButtonPage() {
-        await this.page.goto(this.url);
+        this.page.goto(this.url, { waitUntil: 'domcontentloaded' });
     }
 
     async returnRadioWebElement(buttonName) {

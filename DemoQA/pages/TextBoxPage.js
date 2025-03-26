@@ -12,7 +12,7 @@ class TextBoxPage {
     }
 
     async visitTextBoxPage() {
-        return await this.page.goto(this.url, 'commit');
+        this.page.goto(this.url, { waitUntil: 'domcontentloaded' });
     }
 
     async fillUpAllInputFields(fullName, email, currentAddress, permanentAddress) {
