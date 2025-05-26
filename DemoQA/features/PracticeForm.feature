@@ -1,4 +1,4 @@
-@practiceForm @only
+@practiceForm
 Feature: Practice form submission functionality
 
     Background:

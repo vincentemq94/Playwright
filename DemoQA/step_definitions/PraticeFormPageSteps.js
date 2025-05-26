@@ -56,9 +56,9 @@ Then(`I should see the required fields border are highlight in red in the Practi
     const backgroundImage = "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e\")";
     expect(await practiceFormPage.getElementProperty(practiceFormPage.firstNameInputField, "background image")).toBe(backgroundImage);
     expect(await practiceFormPage.getElementProperty(practiceFormPage.lastNameInputField, "background image")).toBe(backgroundImage);
-    expect(await practiceFormPage.getElementProperty(await practiceFormPage.getRadioElement("male"), "color")).toBe("rgb(220, 53, 69)");
-    expect(await practiceFormPage.getElementProperty(await practiceFormPage.getRadioElement("female"), "color")).toBe("rgb(220, 53, 69)");
-    expect(await practiceFormPage.getElementProperty(await practiceFormPage.getRadioElement("other"), "color")).toBe("rgb(220, 53, 69)");
+    expect(await practiceFormPage.getElementProperty(await practiceFormPage.getGenderRadioElement("male"), "color")).toBe("rgb(220, 53, 69)");
+    expect(await practiceFormPage.getElementProperty(await practiceFormPage.getGenderRadioElement("female"), "color")).toBe("rgb(220, 53, 69)");
+    expect(await practiceFormPage.getElementProperty(await practiceFormPage.getGenderRadioElement("other"), "color")).toBe("rgb(220, 53, 69)");
     expect(await practiceFormPage.getElementProperty(practiceFormPage.mobileNuimberInputField, "background image")).toBe(backgroundImage);
 });
 
@@ -74,9 +74,9 @@ Then(`I should see the {string} field border are highlight in red in the Practic
     };
 
     if (field == "gender") {
-        expect(await practiceFormPage.getElementProperty(await practiceFormPage.getRadioElement("male"), "color")).toBe("rgb(220, 53, 69)");
-        expect(await practiceFormPage.getElementProperty(await practiceFormPage.getRadioElement("female"), "color")).toBe("rgb(220, 53, 69)");
-        expect(await practiceFormPage.getElementProperty(await practiceFormPage.getRadioElement("other"), "color")).toBe("rgb(220, 53, 69)");
+        expect(await practiceFormPage.getElementProperty(await practiceFormPage.getGenderRadioElement("male"), "color")).toBe("rgb(220, 53, 69)");
+        expect(await practiceFormPage.getElementProperty(await practiceFormPage.getGenderRadioElement("female"), "color")).toBe("rgb(220, 53, 69)");
+        expect(await practiceFormPage.getElementProperty(await practiceFormPage.getGenderRadioElement("other"), "color")).toBe("rgb(220, 53, 69)");
     }
     else if (fieldMap[field]) {
         const fieldElement = fieldMap[field];
