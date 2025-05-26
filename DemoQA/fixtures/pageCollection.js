@@ -4,3 +4,4 @@ export * from '../pages/RadioButtonPage.js';
 export * from '../pages/AlertPage.js';
 export * from '../pages/ButtonPage.js';
 export * from '../pages/ModalDialogBoxPage.js';
+export * from '../pages/PracticeFormPage.js';

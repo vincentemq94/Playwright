@@ -60,7 +60,6 @@ When("I click on the confirm box Button and dialog box cancel in the Alert Page"
     const getDialogMessage = new Promise((resolve) => {
         page.on("dialog", async dialog => {
             expect(dialog.type()).toBe("confirm");
-            //resolve(dialog.message());
             await dialog.dismiss();
             resolve();
         });

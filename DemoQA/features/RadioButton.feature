@@ -3,7 +3,7 @@ Feature: Test Radio Butotn Page
     Background:
         Given I navigate to Radio Button Page
 
-    Scenario: Test able to click on different radio buttons
+    Scenario Outline: Test able to click on different radio buttons
         When I click on "<button name>" radio button in Raido Button Page
         Then I am able to see "<button name>" in the result section in Raido Button Page
 
@@ -13,7 +13,7 @@ Feature: Test Radio Butotn Page
             | Impressive  |
 
 
-    Scenario: Test able to click Yes then Impressive Radio Button
+    Scenario Outline: Scenario Outline name: Test able to click Yes then Impressive Radio Button
         When I click on "<first button>" radio button in Raido Button Page
         And I click on "<second button>" radio button in Raido Button Page
         Then I am able to see "<second button>" in the result section in Raido Button Page

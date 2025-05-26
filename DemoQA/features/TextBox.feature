@@ -1,6 +1,6 @@
 Feature: "Fill in all the texbox"
 
-    Scenario: "Test if the textbox fields are working"
+    Scenario Outline: "Test if the textbox fields are working"
         Given I navigate to Demo QA text box Page
         And I fill up full name input with "<full name>"
         And I fill up email address input with "<emailAddress>"

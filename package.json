@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "npx bddgen",
-    "test": "npx playwright test --workers=2 "
+    "test": "npx playwright test --workers=2"
   },
   "keywords": [
     "Playwright"
