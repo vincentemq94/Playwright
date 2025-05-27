@@ -19,5 +19,6 @@ The goal of this project is to:
 ## 🚀 How to Run Tests
 
 ```bash
-npm install 
+npm install
+npx playwright install
 npm test
