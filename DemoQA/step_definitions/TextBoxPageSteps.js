@@ -1,29 +1,44 @@
 import { Given, When, Then } from '../fixtures/page.js';
+import { expect } from "@playwright/test";
 
 
-Given("I navigate to Demo QA text box Page", async ({ textBoxPage }) => {
+Given(`I am on Text Box Page`, async ({ textBoxPage }) => {
     await textBoxPage.visitTextBoxPage();
 });
 
-Given("I fill up full name input with {string}", async ({ textBoxPage }, fullName) => {
-    await textBoxPage.fullNameInputField.fill(fullName);
+When(`I fill in all the input fields on the Text Box Page`, async ({ textBoxPage }, dataTable) => {
+    const row = dataTable.hashes()[0];
+    await textBoxPage.fullNameInputField.fill(row.fullName);
+    await textBoxPage.emailInputField.fill(row.emailAddress);
+    await textBoxPage.currentAddressField.fill(row.currentAddress);
+    await textBoxPage.permanentAddressField.fill(row.permanentAddress);
 });
 
-Given("I fill up email address input with {string}", async ({ textBoxPage }, emailAddress) => {
-    await textBoxPage.emailInputField.fill(emailAddress);
-});
-
-Given("I fill up full current address with {string}", async ({ textBoxPage }, currentAddress) => {
-    await textBoxPage.currentAddressField.fill(currentAddress);
-});
-
-Given("I fill up permanent Address input with {string}", async ({ textBoxPage }, permanentAddress) => {
-    await textBoxPage.permanentAddressField.fill(permanentAddress);
-});
-
-When("I click on the submit button", async ({ textBoxPage }) => {
+When(`I click on the submit button on the Text Box Page`, async ({ textBoxPage }) => {
     await textBoxPage.submitButton.click();
-})
+});
 
+Then(`I should see the submitted details on the Text Box Page`, async ({ textBoxPage }, dataTable) => {
+    const row = dataTable.hashes()[0];
+    if (row.fullName) {
+        expect(textBoxPage.displayFullName).toHaveText(`Name:${row.fullName}`);
+    }
+    if (row.emailAddress) {
+        expect(textBoxPage.displayEmailAddress).toHaveText(`Email:${row.emailAddress}`);
+    }
+    if (row.currentAddress) {
+        expect(textBoxPage.displayCurrentAddress).toHaveText(`Current Address :${row.currentAddress}`);
+    }
+    if (row.permanentAddress) {
+        expect(textBoxPage.displayPermanentAddress).toHaveText(`Permananet Address :${row.permanentAddress}`);
+    }
+});
+
+Then(`I should not see the submitted details on the Text Box Page`, async ({ textBoxPage }, dataTable) => {
+    expect(textBoxPage.displayFullName).toBeHidden();
+    expect(textBoxPage.displayEmailAddress).toBeHidden();
+    expect(textBoxPage.displayCurrentAddress).toBeHidden();
+    expect(textBoxPage.displayPermanentAddress).toBeHidden();
+});
 
 

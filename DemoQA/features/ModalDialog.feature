@@ -1,12 +1,16 @@
-Feature: Test all the modal disalog box
+@ModalDialog
+Feature: Display different types of modal dialog boxes
 
     Background:
-        Given I navigate to Modal Dialog Box Page
+        Given I am on Modal Dialog Box Page
 
-    Scenario: Test able to trigger the small modal dialog box in Modal Dialog Page
-        When I click on the small modal dialog box in Modal Dialog Page
-        Then I am able to see the small dialog box pop up in Modal Dialog Box Page
-
-    Scenario: Test able to trigger the Big modal dialog box in Modal Dialog Page
-        When I click on the large modal dialog box in Modal Dialog Page
-        Then I am able to see the large dialog box pop up in Modal Dialog Box Page
+    Scenario Outline:: User opens different modal dialogs and verifies the content
+        When I click on the "<modalType>" button on the Modal Dialog Page
+        Then I should see the modal dialog pop up on Modal Dialog Box Page
+        And The dialog box should contain "<content>" as body content on the Modal Dialog Box Page
+        When I click close button on "<modalDialogSize>" on the Modal Dialog Box Page
+        Then The dialog box is no longer be visible
+        Examples:
+            | modalType   | content                          | modalDialogSize  |
+            | small modal | This is a small modal            | small dialog box |
+            | large modal | Lorem Ipsum is simply dummy text | large dialog box |

@@ -1,24 +1,33 @@
-Feature: Test all the Dialog Box in Alert Page
+@AlertDialogBox
+Feature: Alert Page Functionality
 
     Background:
-        Given I navigate to Alert Page
+        Given I am on Alert Page
 
-    Scenario: Test able to handle alert button in Alert Page
-        When I click on the Alert Button in the Alert Page
-        Then I am able to see Alert Dialog Box in the Alert Page
+    Scenario: User accepts alert popup and verifies the displayed message
+        When I click on the "Alert" Button and "accept" on the Alert Page
+        Then I should see alert popup displays "You clicked a button" message on the Alert Page
+        And The popup type should be "alert" on the Alert Page
 
-    Scenario: Test able to handle timer Alert button in Alert Page
-        When I click on the Timer Alert Button in the Alert Page
-        Then I am able to see Alert Dialog Box after 5 seconds in the Alert Page
+    Scenario: User accepts timer alert popup and verifies the delayed message
+        When I click on the "Timer Alert" Button and "accept" on the Alert Page
+        Then I should see alert popup displays "This alert appeared after 5 seconds" message after 5 seconds on the Alert Page
+        And The popup type should be "alert" on the Alert Page
 
-    Scenario: Test able to click confirm in confirm dialog box in Alert Page
-        When I click on the confirm box Button and dialog box confirm in the Alert Page
-        Then I am able to see the confirm results display in the Alert Page
+    Scenario Outline: User interacts with confirm popup and verifies the outcome
+        When I click on the "<Button Type>" Button and "<Action>" on the Alert Page
+        Then I should see confirm output displays "<Expected Message>" message on the Alert Page
+        And The popup type should be "<Pop up Type>" on the Alert Page
+        Examples:
+            | Button Type | Action  | Expected Message    | Pop up Type |
+            | confirm box | confirm | You selected Ok     | confirm     |
+            | confirm box | cancel  | You selected Cancel | confirm     |
 
-    Scenario: Test able to click cancel in confirm dialog box in Alert Page
-        When I click on the confirm box Button and dialog box cancel in the Alert Page
-        Then I am able to see the cancel results display in the Alert Page
-
-    Scenario:Test able to enter text prompt dialog box in Alert Page
-        When I click on the prompt Button and type "Hello" in the dialog box in the Alert Page
-        Then I am able to see prompt results display "You entered Hello" in the Alert Page
+    Scenario Outline: User submits prompt popup and verifies the entered message
+        When I click on the "<Button Type>" Button and type "<Text>" in the dialog box on the Alert Page
+        Then I should see prompt output displays "<Expected Message>" on the Alert Page
+        And The popup type should be "<Pop up Type>" on the Alert Page
+        Examples:
+            | Button Type | Text             | Expected Message             | Pop up Type |
+            | prompt      | Hello            | You entered Hello            | prompt      |
+            | prompt      | He11lo I am here | You entered He11lo I am here | prompt      |

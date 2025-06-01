@@ -1,96 +1,43 @@
 import { Given, When, Then } from '../fixtures/page.js';
 import { expect } from "@playwright/test";
 
-Given("I navigate to Alert Page", async ({ page, alertPage }) => {
+Given("I am on Alert Page", async ({ page, alertPage }) => {
     await alertPage.visitAlertPage();
 });
 
-When("I click on the Alert Button in the Alert Page", async ({ page, alertPage, variableStorage }) => {
-
-    const getDialogMessage = new Promise((resolve) => {
-        page.on("dialog", async dialog => {
-            expect(dialog.type()).toBe("alert");
-            resolve(dialog.message());
-            await dialog.accept();
-        });
-    });
-
-    await alertPage.alertButton.click();
-    variableStorage.dialogMessage = await getDialogMessage;
-
+When(`I click on the {string} Button and {string} on the Alert Page`, async ({ page, alertPage, variableStorage }, buttonType, action) => {
+    const dialogInfo = alertPage.handleDialogAndReturnDialogInfo(action);
+    await page.waitForTimeout(1000);
+    const buttonElement = await alertPage.getButtonElement(buttonType);
+    await buttonElement.click();
+    variableStorage.dialogInfo = await dialogInfo;
 });
 
-Then("I am able to see Alert Dialog Box in the Alert Page", async ({ page, alertPage, variableStorage }) => {
-    await expect(variableStorage.dialogMessage).toBe("You clicked a button");
+Then(`The popup type should be {string} on the Alert Page`, async ({ page, alertPage, variableStorage }, type) => {
+    expect(variableStorage.dialogInfo.type).toBe(type);
 });
 
-When("I click on the Timer Alert Button in the Alert Page", async ({ page, alertPage, variableStorage }) => {
-
-    const getDialogMessage = new Promise((resolve) => {
-        page.on("dialog", async dialog => {
-            expect(dialog.type()).toBe("alert");
-            resolve(dialog.message());
-            await dialog.accept();
-        });
-    });
-
-    await alertPage.timerAlertButton.click();
-    variableStorage.dialogMessage = await getDialogMessage;
+Then(`I should see alert popup displays {string} message on the Alert Page`, async ({ page, alertPage, variableStorage }, expectedMessage) => {
+    expect(variableStorage.dialogInfo.message).toBe(expectedMessage);
 });
 
-Then("I am able to see Alert Dialog Box after {int} seconds in the Alert Page", async ({ page, alertPage, variableStorage }, time) => {
+Then(`I should see alert popup displays {string} message after {int} seconds on the Alert Page`, async ({ page, alertPage, variableStorage }, expectedMessage, time) => {
     await page.waitForTimeout((time * 1000));
-    await expect(variableStorage.dialogMessage).toBe("This alert appeared after 5 seconds");
-
+    expect(variableStorage.dialogInfo.message).toBe(expectedMessage);
 });
 
-When("I click on the confirm box Button and dialog box confirm in the Alert Page", async ({ page, alertPage }) => {
-    const getDialogMessage = new Promise((resolve) => {
-        page.on("dialog", async dialog => {
-            expect(dialog.type()).toBe("confirm");
-            await dialog.accept();
-            resolve();
-        });
-    });
-
-    await alertPage.confirmButton.click();
+Then(`I should see confirm output displays {string} message on the Alert Page`, async ({ page, alertPage }, expectedMessage) => {
+    expect(alertPage.confirmResult).toHaveText(expectedMessage);
 });
 
-When("I click on the confirm box Button and dialog box cancel in the Alert Page", async ({ page, alertPage }) => {
-    const getDialogMessage = new Promise((resolve) => {
-        page.on("dialog", async dialog => {
-            expect(dialog.type()).toBe("confirm");
-            await dialog.dismiss();
-            resolve();
-        });
-    });
-
-    await alertPage.confirmButton.click();
+When(`I click on the {string} Button and type {string} in the dialog box on the Alert Page`, async ({ page, alertPage, variableStorage }, buttonType, textMessage) => {
+    const dialogInfo = alertPage.handleDialogAndReturnDialogInfo("accept", textMessage)
+    await page.waitForTimeout(1000);
+    const buttonElement = await alertPage.getButtonElement(buttonType);
+    await buttonElement.click();
+    variableStorage.dialogInfo = await dialogInfo;
 });
 
-Then("I am able to see the confirm results display in the Alert Page", async ({ page, alertPage }) => {
-    await expect(alertPage.confirmResult).toHaveText("You selected Ok")
-});
-
-
-Then("I am able to see the cancel results display in the Alert Page", async ({ page, alertPage }) => {
-    await expect(alertPage.confirmResult).toHaveText("You selected Cancel")
-
-});
-
-When("I click on the prompt Button and type {string} in the dialog box in the Alert Page", async ({ page, alertPage }, text) => {
-    const getDialogMessage = new Promise((resolve) => {
-        page.on("dialog", async dialog => {
-            expect(dialog.type()).toBe("prompt");
-            await dialog.accept(text);
-            resolve();
-        });
-    });
-
-    await alertPage.promptButton.click();
-});
-
-Then("I am able to see prompt results display {string} in the Alert Page", async ({ page, alertPage }, text) => {
+Then(`I should see prompt output displays {string} on the Alert Page`, async ({ page, alertPage }, text) => {
     await expect(alertPage.promptResult).toHaveText(text);
-
 });

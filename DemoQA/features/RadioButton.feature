@@ -1,28 +1,30 @@
-Feature: Test Radio Butotn Page
+@RadioButton
+Feature: Radio Button functionality
 
     Background:
-        Given I navigate to Radio Button Page
+        Given I am on Radio Button Page
 
-    Scenario Outline: Test able to click on different radio buttons
-        When I click on "<button name>" radio button in Raido Button Page
-        Then I am able to see "<button name>" in the result section in Raido Button Page
-
-        Examples:
-            | button name |
-            | Yes         |
-            | Impressive  |
-
-
-    Scenario Outline: Scenario Outline name: Test able to click Yes then Impressive Radio Button
-        When I click on "<first button>" radio button in Raido Button Page
-        And I click on "<second button>" radio button in Raido Button Page
-        Then I am able to see "<second button>" in the result section in Raido Button Page
+    Scenario Outline: User selects a radio button and verifies the displayed message
+        When I click on "<Button Name>" radio button on Raido Button Page
+        Then I should see the display message "<Exepcted Message>" on Raido Button Page
 
         Examples:
-            | first button | second button |
-            | Yes          | Impressive    |
-            | Impressive   | Yes           |
+            | Button Name | Exepcted Message |
+            | Yes         | Yes              |
+            | Impressive  | Impressive       |
 
-    Scenario: Test able unable click No Radio button
-        When I click on "No" radio button in Raido Button Page
-        Then I am unable to see the result section in Raido Button Page
+
+    Scenario Outline:  User toggles between two radio buttons and verifies the displayed message
+        When I click on "<First Button>" radio button on Raido Button Page
+        And I click on "<Second Button>" radio button on Raido Button Page
+        Then I should see the display message "<Exepcted Message>" on Raido Button Page
+
+        Examples:
+            | First Button | Second Button | Exepcted Message |
+            | Yes          | Impressive    | Impressive       |
+            | Impressive   | Yes           | Yes              |
+
+    @negativeCase
+    Scenario: User attempts to select the disabled radio button
+        When I click on "No" radio button on Raido Button Page
+        Then The display message should not be visible on the Radio Button Page

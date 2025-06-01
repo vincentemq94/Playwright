@@ -9,6 +9,10 @@ class TextBoxPage {
         this.currentAddressField = page.locator("//textarea[@id='currentAddress']");
         this.permanentAddressField = page.locator("//textarea[@id='permanentAddress']");
         this.submitButton = page.locator("//button[@id='submit']");
+        this.displayFullName = page.locator("//p[@id='name']");
+        this.displayEmailAddress = page.locator("//p[@id='email']");
+        this.displayCurrentAddress = page.locator("//p[@id='currentAddress']");
+        this.displayPermanentAddress = page.locator("//p[@id='permanentAddress']");
     }
 
     async visitTextBoxPage() {

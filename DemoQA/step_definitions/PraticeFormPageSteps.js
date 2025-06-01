@@ -2,10 +2,10 @@ import { Given, When, Then } from "../fixtures/page.js";
 import { expect } from "@playwright/test";
 
 
-Given("I navigate to the Practice Form Page", async ({ practiceFormPage }) => {
+Given(`I navigate to the Practice Form Page`, async ({ practiceFormPage }) => {
     await practiceFormPage.visitPracticeFormPage();
 });
-When(`I fill in the required fields in the Practice Form Page`, async ({ page, practiceFormPage }, dataTable) => {
+When(`I fill in the required fields on the Practice Form Page`, async ({ page, practiceFormPage }, dataTable) => {
     const row = dataTable.hashes()[0];
     await practiceFormPage.firstNameInputField.fill(row.firstName);
     await practiceFormPage.lastNameInputField.fill(row.lastName);
@@ -19,7 +19,7 @@ When(`I click on the submit button on the Practice Form Page`, async ({ page, pr
 });
 
 
-Then(`I should see a popup box with the submitted required details in Practice Form Page`, async ({ page, practiceFormPage }, dataTable) => {
+Then(`I should see a popup box with the submitted required details on Practice Form Page`, async ({ page, practiceFormPage }, dataTable) => {
     await expect(practiceFormPage.modalBox).toBeVisible();
     const tableObject = await practiceFormPage.parsePopupTable();
     const dataRow = await dataTable.hashes()[0];
@@ -30,9 +30,7 @@ Then(`I should see a popup box with the submitted required details in Practice F
     expect(tableObject.content5).toBe(await practiceFormPage.getFormatedDate(dataRow.DOB));
 });
 
-
-
-Then(`I should see a popup box with the all submitted details in Practice Form Page`, async ({ page, practiceFormPage }, dataTable) => {
+Then(`I should see a popup box with the all submitted details on Practice Form Page`, async ({ page, practiceFormPage }, dataTable) => {
     await expect(practiceFormPage.modalBox).toBeVisible();
     const tableObject = await practiceFormPage.parsePopupTable();
 
@@ -52,7 +50,7 @@ Then(`I should see a popup box with the all submitted details in Practice Form P
 });
 
 
-Then(`I should see the required fields border are highlight in red in the Practice Form Page`, async ({ page, practiceFormPage },) => {
+Then(`I should see the required fields border are highlight in red on the Practice Form Page`, async ({ page, practiceFormPage },) => {
     const backgroundImage = "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e\")";
     expect(await practiceFormPage.getElementProperty(practiceFormPage.firstNameInputField, "background image")).toBe(backgroundImage);
     expect(await practiceFormPage.getElementProperty(practiceFormPage.lastNameInputField, "background image")).toBe(backgroundImage);
@@ -63,7 +61,7 @@ Then(`I should see the required fields border are highlight in red in the Practi
 });
 
 
-Then(`I should see the {string} field border are highlight in red in the Practice Form Page`, async ({ page, practiceFormPage }, field) => {
+Then(`I should see the {string} field border are highlight in red on the Practice Form Page`, async ({ page, practiceFormPage }, field) => {
 
     const backgroundImage = "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e\")";
     const fieldMap = {
@@ -86,13 +84,9 @@ Then(`I should see the {string} field border are highlight in red in the Practic
 });
 
 
-When(`I enter email address {string} in the Practice Form Page`, async ({ page, practiceFormPage }, emailAddress) => {
+When(`I enter email address {string} on the Practice Form Page`, async ({ page, practiceFormPage }, emailAddress) => {
     await practiceFormPage.emailAddressInputField.fill(emailAddress);
 });
-
-
-
-
 
 When(`I fill in all the fields in the Practice Form Page`, async ({ page, practiceFormPage }, dataTable) => {
     const row = dataTable.hashes()[0];
@@ -108,17 +102,4 @@ When(`I fill in all the fields in the Practice Form Page`, async ({ page, practi
     await practiceFormPage.currentAddressInputfield.fill(row.currentAddress);
     await practiceFormPage.selectState(row.state);
     await practiceFormPage.selectCity(row.city);
-
-});
-
-
-
-
-When(`I enter {string} as subject in the Practice Form Page`, async ({ page }) => {
-
-});
-
-
-When(`I select {string} as my date of birth in the Practice Form Page`, async ({ page, practiceFormPage }, DOB) => {
-    await practiceFormPage.selectCalendarDate(DOB);
 });

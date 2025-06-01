@@ -19,7 +19,7 @@ class CheckBoxPage {
         this.page.goto(this.url, { waitUntil: 'domcontentloaded' });
     }
 
-    async clickOnCheckbox(checkboxName) {
+    async selectCheckBox(checkboxName) {
         await this.page.locator("//span[@class='rct-title' and text()='" + checkboxName + "']").click();
     }
 

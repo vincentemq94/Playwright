@@ -1,59 +1,57 @@
 import { expect } from '@playwright/test';
 import { Given, When, Then } from '../fixtures/page.js';
 
-Given("I navigate to Demo QA checkbox page", async ({ page, checkBoxPage }) => {
+Given("I am on Check Box Page", async ({ page, checkBoxPage }) => {
     await checkBoxPage.visitCheckboxPage();
 });
 
-Given("I expand all the drop down list using expand all button in checkBoxPage", async ({ page, checkBoxPage }) => {
+Given(`I expand the checkbox list by clicking the Expand All button on the Checkbox Page`, async ({ page, checkBoxPage }) => {
     await checkBoxPage.expandAll.click();
     await page.waitForTimeout(1000);
 
 });
 
-When("I click on the {string} checkbox in checkBoxPage", async ({ page, checkBoxPage }, checkBoxName) => {
-    await checkBoxPage.clickOnCheckbox(checkBoxName.trim());
-});
-
-Then("I check on the result list having {string} in the list in checkBoxPage", async ({ page }, checkBoxNames) => {
-
-    let checkBoxNameList = checkBoxNames.split("|");
-    for (let checkBoxName of checkBoxNameList) {
-
-        // Process wordFile and excelFile as the dispaly is different 
-        if (checkBoxName.trim() == 'Word File.doc') {
-            checkBoxName = "wordFile";
-        }
-        else if (checkBoxName.trim() == "Excel Fie.doc") {
-            checkBoxName = "excelFile";;
-        }
-        else {
-            checkBoxName = checkBoxName.toLowerCase()
-        }
-        await expect(page.locator("//div[@id='result']/span[text()='" + checkBoxName.trim() + "']")).toBeVisible();
+When(`I select multiple checkboxes on the Checkbox Page`, async ({ page, checkBoxPage }, dataTable) => {
+    const rows = dataTable.hashes();
+    for (const row of rows) {
+        const checkboxName = row["Check Box Name"].trim();
+        await checkBoxPage.selectCheckBox(checkboxName);
     }
 });
 
+When(`I select the {string} checkbox on the Checkbox Page`, async ({ page, checkBoxPage }, checkBoxName) => {
+    await checkBoxPage.selectCheckBox(checkBoxName.trim());
+});
 
-Then("I am able to see {string} checkbox in checkBoxPage", async ({ page }, checkBoxNames) => {
-    let checkBoxNameList = checkBoxNames.split("|");
+When(`I expand the {string} checkbox list on the Checkbox Page`, async ({ page, checkBoxPage }, checkBoxName) => {
+    await checkBoxPage.expandSelectedCheckbox(checkBoxName.trim());
+});
+
+
+Then(`The display message should show {string} on the Checkbox Page`, async ({ page, checkBoxPage }, checkBoxNames) => {
+    const checkBoxNameList = checkBoxNames.split(" ");
     for (let checkBoxName of checkBoxNameList) {
-        await expect(page.locator("//span[@class='rct-title' and text()='" + checkBoxName.trim() + "']")).toBeVisible();
+        checkBoxName = checkBoxName.trim();
+        await expect(page.locator("//div[@id='result']/span[text()='" + checkBoxName + "']")).toBeVisible();
     }
-})
+});
 
-Then("I am unable to see {string} checkbox in checkBoxPage", async ({ page }, checkBoxNames) => {
-    let checkBoxNameList = checkBoxNames.split("|");
-    for (let checkBoxName of checkBoxNameList) {
-        await expect(page.locator("//span[@class='rct-title' and text()='" + checkBoxName.trim() + "']")).toBeHidden();
+Then(`The following check boxes should be visible on the Checkbox Page`, async ({ page }, datatTable) => {
+    const rows = datatTable.hashes();
+    for (const row of rows) {
+        const checkBoxName = row["Check Box Name"].trim();
+        await expect(page.locator("//span[@class='rct-title' and text()='" + checkBoxName + "']")).toBeVisible();
     }
-})
+});
 
-When("I collapse the drop down list in checkBoxPage", async ({ checkBoxPage }) => {
+When(`I click the collapse all button the checkbox list on the Checkbox Page`, async ({ checkBoxPage }) => {
     await checkBoxPage.collapseAll.click();
-})
+});
 
-
-Given("I expand {string} drop down list in checkBoxPage", async ({ checkBoxPage }, checkboxName) => {
-    await checkBoxPage.expandSelectedCheckbox(checkboxName.trim());
-})
+Then(`The following check boxes should no longer be visible on the Checkbox Page`, async ({ page }, datatTable) => {
+    const rows = datatTable.hashes();
+    for (const row of rows) {
+        const checkBoxName = row["Check Box Name"].trim();
+        await expect(page.locator("//span[@class='rct-title' and text()='" + checkBoxName + "']")).toBeHidden();
+    }
+});

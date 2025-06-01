@@ -1,15 +1,15 @@
-@practiceForm
+@PracticeForm
 Feature: Practice form submission functionality
 
     Background:
         Given I navigate to the Practice Form Page
 
-    Scenario Outline: User can successfully submit the form with required fields only
-        When I fill in the required fields in the Practice Form Page
+    Scenario Outline: User submits the form with required fields and verifies the submitted details 
+        When I fill in the required fields on the Practice Form Page
             | firstName   | lastName   | gender   | mobileNumber   | DOB   |
             | <firstName> | <lastName> | <gender> | <mobileNumber> | <DOB> |
         And I click on the submit button on the Practice Form Page
-        Then I should see a popup box with the submitted required details in Practice Form Page
+        Then I should see a popup box with the submitted required details on Practice Form Page
             | firstName   | lastName   | gender   | mobileNumber   | DOB   |
             | <firstName> | <lastName> | <gender> | <mobileNumber> | <DOB> |
         Examples:
@@ -19,15 +19,15 @@ Feature: Practice form submission functionality
             | Jasmie    | Tan      | Female | 6587654321   | 27-02-1999 |
 
     Scenario: User cannot submit the form when required fields are empty
-        When I click on the submit button
-        Then I should see the required fields border are highlight in red in the Practice Form Page
+        When I click on the submit button on the Practice Form Page
+        Then I should see the required fields border are highlight in red on the Practice Form Page
 
-    Scenario Outline: User can successfully submit the form with all fields completed
+    Scenario Outline: User submits the form with all fields completed and verifies the submitted details
         When I fill in all the fields in the Practice Form Page
             | firstName   | lastName   | emailAddress   | gender   | mobileNumber   | DOB   | subjects   | hobbies   | picture   | currentAddress   | state   | city   |
             | <firstName> | <lastName> | <emailAddress> | <gender> | <mobileNumber> | <DOB> | <subjects> | <hobbies> | <picture> | <currentAddress> | <state> | <city> |
-        And I click on the submit button
-        Then I should see a popup box with the all submitted details in Practice Form Page
+        And I click on the submit button on the Practice Form Page
+        Then I should see a popup box with the all submitted details on Practice Form Page
             | firstName   | lastName   | emailAddress   | gender   | mobileNumber   | DOB   | subjects   | hobbies   | picture   | currentAddress   | state   | city   |
             | <firstName> | <lastName> | <emailAddress> | <gender> | <mobileNumber> | <DOB> | <subjects> | <hobbies> | <picture> | <currentAddress> | <state> | <city> |
         Examples:
@@ -37,12 +37,12 @@ Feature: Practice form submission functionality
 
     @negativeCase
     Scenario Outline: User cannot submit the Practice Form with an invalid email address
-        When I fill in the required fields in the Practice Form Page
+        When I fill in the required fields on the Practice Form Page
             | firstName   | lastName   | gender   | mobileNumber   | DOB   |
             | <firstName> | <lastName> | <gender> | <mobileNumber> | <DOB> |
-        And I enter email address "<email address>" in the Practice Form Page
+        And I enter email address "<email address>" on the Practice Form Page
         And I click on the submit button on the Practice Form Page
-        Then I should see the "email address" field border are highlight in red in the Practice Form Page
+        Then I should see the "email address" field border are highlight in red on the Practice Form Page
         Examples:
             | firstName | lastName | email address               | gender | mobileNumber | DOB        |
             | Vincent   | Eng      | vincenteng.com              | Male   | 6512345123   | 14-02-1990 |
@@ -52,11 +52,11 @@ Feature: Practice form submission functionality
 
     @negativeCase
     Scenario Outline: User cannot submit the Practice Form with an invalid mobile number
-        When I fill in the required fields in the Practice Form Page
+        When I fill in the required fields on the Practice Form Page
             | firstName   | lastName   | gender   | mobileNumber   | DOB   |
             | <firstName> | <lastName> | <gender> | <mobileNumber> | <DOB> |
         And I click on the submit button on the Practice Form Page
-        Then I should see the "mobileNumber" field border are highlight in red in the Practice Form Page
+        Then I should see the "mobileNumber" field border are highlight in red on the Practice Form Page
         Examples:
             | firstName | lastName | gender | mobileNumber | DOB        |
             | Vincent   | Eng      | Male   | 651234512    | 14-02-1990 |
@@ -65,11 +65,11 @@ Feature: Practice form submission functionality
 
     @negativeCase
     Scenario Outline: User cannot submit the Practice Form when one required field is empty
-        When I fill in the required fields in the Practice Form Page
+        When I fill in the required fields on the Practice Form Page
             | firstName   | lastName   | gender   | mobileNumber   | DOB   |
             | <firstName> | <lastName> | <gender> | <mobileNumber> | <DOB> |
         And I click on the submit button on the Practice Form Page
-        Then I should see the "<field>" field border are highlight in red in the Practice Form Page
+        Then I should see the "<field>" field border are highlight in red on the Practice Form Page
         Examples:
             | firstName | lastName | gender | mobileNumber | DOB        | field        |
             |           | Kim      | Male   | 6512345123   | 14-02-1990 | firstName    |

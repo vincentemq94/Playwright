@@ -14,19 +14,17 @@ class RadioButtonPage {
         this.page.goto(this.url, { waitUntil: 'domcontentloaded' });
     }
 
-    async returnRadioWebElement(buttonName) {
-        if (buttonName === "Yes") {
-            return this.yesRadioButton;
+    async getRadioButtonElement(buttonName) {
+        const radioButtonMap = {
+            "yes": this.yesRadioButton,
+            "impressive": this.impressiveRadioButton,
+            "no": this.noRadioButton
         }
-        else if (buttonName === "Impressive") {
-            return this.impressiveRadioButton;
-        }
-        else if (buttonName === "No") {
-            return this.noRadioButton;
-        }
-        else {
+        const radioButtonElement = radioButtonMap[buttonName.toLowerCase().trim()];
+        if (radioButtonElement == undefined) {
             throw new Error("There is no such button : " + buttonName);
         }
+        return radioButtonElement;
     }
 
 }

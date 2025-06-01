@@ -62,7 +62,7 @@ class PracticeFormPage {
 
         const multipleHobbies = hobbies.split(",");
         for (const hobby of multipleHobbies) {
-            let checkbox = await this.getHobbyElement(hobby.trim());
+            let checkbox = await this.getHobbyElement(hobby.toLowerCase().trim());
             if (hobby == null || hobby == undefined) {
                 continue;
             }
@@ -78,7 +78,7 @@ class PracticeFormPage {
             music: 'hobbies-checkbox-3'
         };
 
-        const hobbyId = hobbyMap[hobby.toLowerCase()];
+        const hobbyId = hobbyMap[hobby];
         if (hobbyId == undefined) {
             console.log(`Hobby not supported value: ${hobby}`);
             return undefined;
